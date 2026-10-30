@@ -1,0 +1,371 @@
+
+/* =====================================
+   PROJECT: ECLIPSE
+   ОСНОВНОЙ JAVASCRIPT
+===================================== */
+
+// НАСТРОЙКИ ДЕМОНСТРАЦИОННОГО ВХОДА
+const ACCESS_ID = "EC-1047";
+const ACCESS_PASSWORD = "ECLIPSE2026";
+
+// ПОИСК ЭЛЕМЕНТОВ НА СТРАНИЦЕ
+const loadingScreen = document.getElementById("loading-screen");
+const loginScreen = document.getElementById("login-screen");
+const mainApp = document.getElementById("main-app");
+
+const loginButton = document.getElementById("login-button");
+const logoutButton = document.getElementById("logout-button");
+
+const agentId = document.getElementById("agent-id");
+const agentPassword = document.getElementById("agent-password");
+const loginError = document.getElementById("login-error");
+
+const pageTitle = document.getElementById("page-title");
+
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modal-title");
+const modalContent = document.getElementById("modal-content");
+const closeModalButton = document.getElementById("close-modal");
+const modalConfirm = document.getElementById("modal-confirm");
+
+const toast = document.getElementById("toast");
+const toastMessage = document.getElementById("toast-message");
+
+
+// НАЗВАНИЯ СТРАНИЦ
+const pageNames = {
+    dashboard: "Главная панель",
+    files: "Архив дел",
+    missions: "Операции",
+    agents: "Сотрудники",
+    map: "Карта объектов",
+    messages: "Сообщения",
+    help: "Центр помощи"
+};
+
+
+// ИНФОРМАЦИЯ О СЕКРЕТНЫХ ДЕЛАХ
+const cases = {
+    "001": {
+        title: "Дело № 001 — Затмение",
+        text: `
+            <p><strong>СТАТУС:</strong> Открыто</p>
+            <p><strong>ДАТА ОБНАРУЖЕНИЯ:</strong> 14 октября 2026 года</p>
+            <p><strong>МЕСТО:</strong> Сектор 04</p>
+            <p>
+                В ходе ночного наблюдения был обнаружен неизвестный сигнал.
+                Его происхождение пока не установлено.
+            </p>
+            <p>
+                Последняя запись системы содержит только одну фразу:
+                «Они уже знают, что мы здесь».
+            </p>
+            <p><strong>ЗАДАЧА АГЕНТА:</strong> Изучить доступные материалы.</p>
+        `
+    },
+
+    "014": {
+        title: "Дело № 014 — Неизвестный сигнал",
+        text: `
+            <p><strong>СТАТУС:</strong> Засекречено</p>
+            <p><strong>МЕСТО:</strong> Северный сектор</p>
+            <p>
+                Радиостанция организации получила сообщение
+                с неизвестной частоты.
+            </p>
+            <p>
+                Сообщение повторялось трижды, но источник сигнала
+                определить не удалось.
+            </p>
+            <p><strong>ПРИМЕЧАНИЕ:</strong> Требуется дополнительное расследование.</p>
+        `
+    },
+
+    "027": {
+        title: "Дело № 027 — Заброшенная станция",
+        text: `
+            <p><strong>СТАТУС:</strong> В работе</p>
+            <p><strong>МЕСТО:</strong> Сектор 09</p>
+            <p>
+                На старой станции обнаружены следы присутствия людей.
+                Согласно архиву, объект был закрыт много лет назад.
+            </p>
+            <p>
+                Последняя запись в журнале станции датирована
+                неизвестным числом.
+            </p>
+        `
+    }
+};
+
+
+// ЗАГРУЗОЧНЫЙ ЭКРАН
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        loadingScreen.classList.add("hidden");
+        loginScreen.classList.remove("hidden");
+    }, 1400);
+});
+
+
+// ВХОД В СИСТЕМУ
+function login() {
+    const enteredId = agentId.value.trim();
+    const enteredPassword = agentPassword.value;
+
+    if (
+        enteredId === ACCESS_ID &&
+        enteredPassword === ACCESS_PASSWORD
+    ) {
+        loginError.textContent = "";
+
+        loginScreen.classList.add("hidden");
+        mainApp.classList.remove("hidden");
+
+        showToast("Доступ подтверждён. Добро пожаловать, агент 1047.");
+
+        openPage("dashboard");
+    } else {
+        loginError.textContent =
+            "ОШИБКА: неверный идентификатор или код доступа.";
+    }
+}
+
+loginButton.addEventListener("click", login);
+
+
+// ВХОД ПО КЛАВИШЕ ENTER
+agentPassword.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        login();
+    }
+});
+
+agentId.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        agentPassword.focus();
+    }
+});
+
+
+// ВЫХОД ИЗ СИСТЕМЫ
+logoutButton.addEventListener("click", () => {
+    mainApp.classList.add("hidden");
+    loginScreen.classList.remove("hidden");
+
+    agentId.value = "";
+    agentPassword.value = "";
+
+    loginError.textContent = "";
+
+    showToast("Вы вышли из системы.");
+});
+
+
+// ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
+function openPage(pageName) {
+    const pages = document.querySelectorAll(".page");
+    const buttons = document.querySelectorAll(".nav-button[data-page]");
+
+    pages.forEach((page) => {
+        page.classList.remove("active");
+    });
+
+    buttons.forEach((button) => {
+        button.classList.remove("active");
+    });
+
+    const selectedPage = document.getElementById("page-" + pageName);
+
+    if (!selectedPage) {
+        showToast("Раздел пока недоступен.");
+        return;
+    }
+
+    selectedPage.classList.add("active");
+
+    const selectedButton = document.querySelector(
+        '.nav-button[data-page="' + pageName + '"]'
+    );
+
+    if (selectedButton) {
+        selectedButton.classList.add("active");
+    }
+
+    pageTitle.textContent = pageNames[pageName] || "Раздел";
+
+    // Прокручиваем страницу наверх
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+// ОБРАБОТКА КНОПОК МЕНЮ
+document.querySelectorAll("[data-page]").forEach((button) => {
+    button.addEventListener("click", () => {
+        openPage(button.dataset.page);
+    });
+});
+
+
+// ОТКРЫТИЕ СЕКРЕТНЫХ ДОСЬЕ
+function openCase(caseNumber) {
+    const caseData = cases[caseNumber];
+
+    if (!caseData) {
+        showToast("Досье не найдено.");
+        return;
+    }
+
+    modalTitle.textContent = caseData.title;
+    modalContent.innerHTML = caseData.text;
+
+    modal.classList.remove("hidden");
+}
+
+
+// КНОПКИ ОТКРЫТИЯ ДЕЛ
+document.querySelectorAll("[data-open-case]").forEach((button) => {
+    button.addEventListener("click", () => {
+        openCase(button.dataset.openCase);
+    });
+});
+
+
+// ЗАКРЫТИЕ ВСПЛЫВАЮЩЕГО ОКНА
+function closeModal() {
+    modal.classList.add("hidden");
+}
+
+closeModalButton.addEventListener("click", closeModal);
+modalConfirm.addEventListener("click", closeModal);
+
+modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
+
+// ЗАКРЫТИЕ ОКНА КЛАВИШЕЙ ESCAPE
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeModal();
+    }
+});
+
+
+// ПОИСК ПО АРХИВУ
+const searchInput = document.getElementById("case-search");
+
+searchInput.addEventListener("input", () => {
+    const searchValue = searchInput.value.toLowerCase().trim();
+
+    document.querySelectorAll(".case-card").forEach((card) => {
+        const cardText = card.dataset.search.toLowerCase();
+
+        if (cardText.includes(searchValue)) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+});
+
+
+// ИНФОРМАЦИЯ ОБ ОПЕРАЦИЯХ
+const missionInformation = {
+    "quiet-city": {
+        title: "Операция «Тихий город»",
+        text: `
+            <p><strong>КОД:</strong> EC-M07</p>
+            <p><strong>СТАТУС:</strong> Активна</p>
+            <p>
+                В секторе 04 зафиксирована неизвестная активность.
+                Аналитический отдел подготовил предварительный отчёт.
+            </p>
+            <p>
+                Ваша задача — ознакомиться с материалами
+                и передать результаты руководителю.
+            </p>
+        `
+    },
+
+    "black-box": {
+        title: "Операция «Чёрный ящик»",
+        text: `
+            <p><strong>КОД:</strong> EC-M12</p>
+            <p><strong>СТАТУС:</strong> Ожидает назначения</p>
+            <p>
+                В архив поступил неизвестный цифровой файл.
+                Его содержимое пока не установлено.
+            </p>
+            <p>
+                Операция ожидает подтверждения руководителя.
+            </p>
+        `
+    }
+};
+
+
+// ОТКРЫТИЕ ОПЕРАЦИЙ
+document.querySelectorAll("[data-mission]").forEach((button) => {
+    button.addEventListener("click", () => {
+        const mission = missionInformation[button.dataset.mission];
+
+        if (!mission) return;
+
+        modalTitle.textContent = mission.title;
+        modalContent.innerHTML = mission.text;
+
+        modal.classList.remove("hidden");
+    });
+});
+
+
+// ЗАКРЫТИЕ ПЕРВОЙ ПОДСКАЗКИ
+const closeGuideButton = document.getElementById("close-guide");
+const guideBanner = document.getElementById("guide-banner");
+
+closeGuideButton.addEventListener("click", () => {
+    guideBanner.classList.add("hidden");
+    showToast("Подсказка закрыта. Открыть её можно будет после обновления страницы.");
+});
+
+
+// СИСТЕМНЫЕ УВЕДОМЛЕНИЯ
+function showToast(message) {
+    toastMessage.textContent = message;
+
+    toast.classList.remove("hidden");
+
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer = setTimeout(() => {
+        toast.classList.add("hidden");
+    }, 3200);
+}
+
+
+// ЧАСЫ В СИСТЕМЕ
+function updateClock() {
+    const now = new Date();
+
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+
+    document.getElementById("system-time").textContent =
+        hours + ":" + minutes + ":" + seconds;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+
+// ПРИВЕТСТВИЕ В КОНСОЛИ
+console.log("PROJECT: ECLIPSE");
+console.log("Система успешно запущена.");
+console.log("Все материалы являются вымышленными.");
