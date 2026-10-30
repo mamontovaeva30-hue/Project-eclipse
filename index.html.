@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080b12">
+    <title>PROJECT: ECLIPSE — Секретный архив</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ЗАГРУЗОЧНЫЙ ЭКРАН -->
+<div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+        <div class="eclipse-logo">E</div>
+        <h1>PROJECT: ECLIPSE</h1>
+        <p>ЗАКРЫТАЯ СИСТЕМА ДОСТУПА</p>
+        <div class="loading-line">
+            <div class="loading-progress"></div>
+        </div>
+        <span>УСТАНОВЛЕНИЕ СОЕДИНЕНИЯ...</span>
+    </div>
+</div>
+
+<!-- ЭКРАН ВХОДА -->
+<section id="login-screen" class="login-screen hidden">
+    <div class="login-background"></div>
+
+    <div class="login-card">
+        <div class="eclipse-logo">E</div>
+
+        <p class="small-label">СЕКРЕТНОЕ УПРАВЛЕНИЕ</p>
+        <h1>PROJECT: ECLIPSE</h1>
+        <p class="login-description">
+            Добро пожаловать в закрытую систему организации.
+            Введите данные для получения доступа.
+        </p>
+
+        <label for="agent-id">ИДЕНТИФИКАТОР СОТРУДНИКА</label>
+        <input id="agent-id" type="text" placeholder="Например: EC-1047">
+
+        <label for="agent-password">КОД ДОСТУПА</label>
+        <input id="agent-password" type="password" placeholder="Введите пароль">
+
+        <button id="login-button" class="primary-button">
+            ВОЙТИ В СИСТЕМУ
+        </button>
+
+        <p id="login-error" class="error-message"></p>
+
+        <div class="login-footer">
+            НЕСАНКЦИОНИРОВАННЫЙ ДОСТУП ЗАПРЕЩЁН
+        </div>
+    </div>
+</section>
+
+<!-- ОСНОВНОЙ САЙТ -->
+<div id="main-app" class="main-app hidden">
+
+    <!-- ЛЕВОЕ МЕНЮ -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <div class="mini-logo">E</div>
+            <div>
+                <strong>ECLIPSE</strong>
+                <span>СЕКРЕТНАЯ СИСТЕМА</span>
+            </div>
+        </div>
+
+        <div class="agent-profile">
+            <div class="agent-avatar">EC</div>
+            <div>
+                <strong>АГЕНТ 1047</strong>
+                <span>УРОВЕНЬ ДОСТУПА: 03</span>
+            </div>
+        </div>
+
+        <p class="menu-heading">ГЛАВНОЕ МЕНЮ</p>
+
+        <nav class="navigation">
+            <button class="nav-button active" data-page="dashboard">
+                <span>◈</span> Главная
+            </button>
+
+            <button class="nav-button" data-page="files">
+                <span>▤</span> Архив дел
+            </button>
+
+            <button class="nav-button" data-page="missions">
+                <span>⌖</span> Операции
+            </button>
+
+            <button class="nav-button" data-page="agents">
+                <span>♙</span> Сотрудники
+            </button>
+
+            <button class="nav-button" data-page="map">
+                <span>◎</span> Карта объектов
+            </button>
+
+            <button class="nav-button" data-page="messages">
+                <span>✉</span> Сообщения
+                <span class="notification">2</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button class="nav-button" data-page="help">
+                <span>?</span> Помощь
+            </button>
+
+            <button id="logout-button" class="nav-button logout-button">
+                <span>↪</span> Выйти
+            </button>
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+                СИСТЕМА АКТИВНА
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- ОСНОВНАЯ ОБЛАСТЬ -->
+    <main class="main-content">
+
+        <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+        <header class="topbar">
+            <div>
+                <span class="breadcrumb">ECLIPSE / ЗАКРЫТАЯ СЕТЬ</span>
+                <h2 id="page-title">Главная панель</h2>
+            </div>
+
+            <div class="topbar-right">
+                <div class="system-time" id="system-time">00:00:00</div>
+                <div class="topbar-agent">АГЕНТ EC-1047</div>
+            </div>
+        </header>
+
+        <!-- ПОДСКАЗКА -->
+        <div class="guide-banner" id="guide-banner">
+            <div class="guide-icon">i</div>
+            <div>
+                <strong>ПЕРВЫЙ РАЗ В СИСТЕМЕ?</strong>
+                <p>Нажимай на разделы слева. Здесь ты найдёшь секретные дела,
+                    задания и информацию об организации.</p>
+            </div>
+            <button id="close-guide" aria-label="Закрыть подсказку">×</button>
+        </div>
+
+        <!-- СТРАНИЦА: ГЛАВНАЯ -->
+        <section class="page active" id="page-dashboard">
+
+            <div class="welcome-section">
+                <div>
+                    <p class="small-label">ЗАКРЫТАЯ ИНФОРМАЦИЯ</p>
+                    <h1>Добро пожаловать,<br>агент 1047.</h1>
+                    <p>Некоторые тайны лучше оставить нераскрытыми.</p>
+                </div>
+
+                <div class="welcome-image">
+                    <img
+                        src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1000"
+                        alt="Ночное небо"
+                    >
+                    <div class="image-overlay">
+                        <span>ОБЪЕКТ № 001</span>
+                        <strong>THE ECLIPSE</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-heading">
+                <div>
+                    <span class="small-label">ОБЗОР</span>
+                    <h2>Состояние организации</h2>
+                </div>
+                <span class="live-label">● В РЕАЛЬНОМ ВРЕМЕНИ</span>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span>АКТИВНЫЕ ДЕЛА</span>
+                    <strong>12</strong>
+                    <small>3 требуют внимания</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>СОТРУДНИКИ</span>
+                    <strong>48</strong>
+                    <small>Все подразделения</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>ОПЕРАЦИИ</span>
+                    <strong>07</strong>
+                    <small>Выполняются сейчас</small>
+                </div>
+
+                <div class="stat-card">
+                    <span>УРОВЕНЬ УГРОЗЫ</span>
+                    <strong class="danger-text">СРЕДНИЙ</strong>
+                    <small>Последнее обновление: сегодня</small>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <div class="content-card featured-case">
+                    <div class="card-top">
+                        <span class="small-label">ДЕЛО НЕДЕЛИ</span>
+                        <span class="case-status">ЗАСЕКРЕЧЕНО</span>
+                    </div>
+
+                    <img
+                        src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=900"
+                        alt="Тёмный пейзаж"
+                    >
+
+                    <h3>ДЕЛО № 001 — «ЗАТМЕНИЕ»</h3>
+                    <p>
+                        Неизвестный объект был обнаружен в закрытой зоне.
+                        Все попытки установить его происхождение не увенчались успехом.
+                    </p>
+
+                    <button class="secondary-button" data-open-case="001">
+                        ОТКРЫТЬ ДОСЬЕ →
+                    </button>
+                </div>
+
+                <div class="content-card activity-card">
+                    <span class="small-label">ПОСЛЕДНИЕ СОБЫТИЯ</span>
+                    <h3>Журнал системы</h3>
+
+                    <div class="activity-item">
+                        <span class="activity-dot red"></span>
+                        <div>
+                            <strong>Обнаружен неизвестный сигнал</strong>
+                            <small>Сегодня, 09:42</small>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <span class="activity-dot"></span>
+                        <div>
+                            <strong>Обновлён архив объектов</strong>
+                            <small>Сегодня, 08:15</small>
+                        </div>
+                    </div>
+
+                    <div class="activity-item">
+                        <span class="activity-dot"></span>
+                        <div>
+                            <strong>Агент 1047 вошёл в систему</strong>
+                            <small>Сегодня, 08:02</small>
+                        </div>
+                    </div>
+
+                    <button class="text-button" data-page="messages">
+                        ВСЕ УВЕДОМЛЕНИЯ →
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="content-card warning-card">
+                <div class="warning-symbol">!</div>
+                <div>
+                    <strong>СИСТЕМНОЕ ПРЕДУПРЕЖДЕНИЕ</strong>
+                    <p>
+                        Некоторые материалы имеют ограниченный уровень доступа.
+                        Не пытайтесь открыть закрытые разделы без разрешения.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- СТРАНИЦА: АРХИВ -->
+        <section class="page" id="page-files">
+
+            <div class="page-intro">
+                <span class="small-label">БАЗА ДАННЫХ / 001–099</span>
+                <h1>Архив дел</h1>
+                <p>Все известные расследования организации.</p>
+            </div>
+
+            <div class="search-container">
+                <input id="case-search" type="search"
+                       placeholder="Поиск по названию или номеру дела...">
+            </div>
+
+            <div class="case-grid">
+
+                <article class="case-card" data-search="затмение 001 объект">
+                    <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=700" alt="Небо">
+                    <div class="case-card-content">
+                        <span class="case-status">ОТКРЫТО</span>
+                        <h3>Дело № 001</h3>
+                        <p>Затмение</p>
+                        <button class="secondary-button" data-open-case="001">ИЗУЧИТЬ ДЕЛО</button>
+                    </div>
+                </article>
+
+                <article class="case-card" data-search="сигнал 014 радиосвязь">
+                    <img src="https://images.unsplash.com/photo-1519607641048-6e9d8e3c7a5e?w=700" alt="Ночной город">
+                    <div class="case-card-content">
+                        <span class="case-status">ЗАСЕКРЕЧЕНО</span>
+                        <h3>Дело № 014</h3>
+                        <p>Неизвестный сигнал</p>
+                        <button class="secondary-button" data-open-case="014">ИЗУЧИТЬ ДЕЛО</button>
+                    </div>
+                </article>
+
+                <article class="case-card" data-search="станция 027 заброшенная">
+                    <img src="https://images.unsplash.com/photo-1511497584788-876760111969?w=700" alt="Лес">
+                    <div class="case-card-content">
+                        <span class="case-status">В РАБОТЕ</span>
+                        <h3>Дело № 027</h3>
+                        <p>Заброшенная станция</p>
+                        <button class="secondary-button" data-open-case="027">ИЗУЧИТЬ ДЕЛО</button>
+                    </div>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- СТРАНИЦА: ОПЕРАЦИИ -->
+        <section class="page" id="page-missions">
+
+            <div class="page-intro">
+                <span class="small-label">ПОДРАЗДЕЛЕНИЕ / ОПЕРАЦИИ</span>
+                <h1>Операции</h1>
+                <p>Текущие задания и специальные поручения.</p>
+            </div>
+
+            <div class="mission-card">
+                <div>
+                    <span class="case-status">АКТИВНА</span>
+                    <h3>Операция «Тихий город»</h3>
+                    <p>Проверить сообщения о неизвестной активности в секторе 04.</p>
+                    <small>СЛОЖНОСТЬ: СРЕДНЯЯ</small>
+                </div>
+                <button class="primary-button" data-mission="quiet-city">ПОДРОБНЕЕ</button>
+            </div>
+
+            <div class="mission-card">
+                <div>
+                    <span class="case-status">ОЖИДАЕТ</span>
+                    <h3>Операция «Чёрный ящик»</h3>
+                    <p>Изучить данные, полученные из неизвестного источника.</p>
+                    <small>СЛОЖНОСТЬ: ВЫСОКАЯ</small>
+                </div>
+                <button class="primary-button" data-mission="black-box">ПОДРОБНЕЕ</button>
+            </div>
+
+        </section>
+
+        <!-- СТРАНИЦА: СОТРУДНИКИ -->
+        <section class="page" id="page-agents">
+
+            <div class="page-intro">
+                <span class="small-label">ВНУТРЕННЯЯ БАЗА</span>
+                <h1>Сотрудники</h1>
+                <p>Список агентов и руководителей организации.</p>
+            </div>
+
+            <div class="agents-grid">
+
+                <div class="agent-card">
+                    <div class="large-avatar">07</div>
+                    <h3>АГЕНТ 007</h3>
+                    <p>Руководитель операций</p>
+                    <span>УРОВЕНЬ ДОСТУПА: 05</span>
+                </div>
+
+                <div class="agent-card">
+                    <div class="large-avatar">12</div>
+                    <h3>АГЕНТ 012</h3>
+                    <p>Аналитический отдел</p>
+                    <span>УРОВЕНЬ ДОСТУПА: 04</span>
+                </div>
+
+                <div class="agent-card">
+                    <div class="large-avatar">47</div>
+                    <h3>АГЕНТ 047</h3>
+                    <p>Технический отдел</p>
+                    <span>УРОВЕНЬ ДОСТУПА: 03</span>
+                </div>
+
+                <div class="agent-card">
+                    <div class="large-avatar">?</div>
+                    <h3>НЕИЗВЕСТНЫЙ</h3>
+                    <p>Данные отсутствуют</p>
+                    <span>УРОВЕНЬ ДОСТУПА: ???</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- СТРАНИЦА: КАРТА -->
+        <section class="page" id="page-map">
+
+            <div class="page-intro">
+                <span class="small-label">ГЕОГРАФИЧЕСКАЯ СЕТЬ</span>
+                <h1>Карта объектов</h1>
+                <p>Местоположение известных объектов организации.</p>
+            </div>
+
+            <div class="map-panel">
+                <img
+                    src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200"
+                    alt="Вид на тёмный океан"
+                >
+                <div class="map-label label-one">ОБЪЕКТ 001</div>
+                <div class="map-label label-two">СЕКТОР 04</div>
+                <div class="map-label label-three">ОБЪЕКТ 027</div>
+            </div>
+
+            <p class="map-note">
+                ДЕМОНСТРАЦИОННАЯ КАРТА. МЕСТОПОЛОЖЕНИЯ ВЫМЫШЛЕНЫ.
+            </p>
+
+        </section>
+
+        <!-- СТРАНИЦА: СООБЩЕНИЯ -->
+        <section class="page" id="page-messages">
+
+            <div class="page-intro">
+                <span class="small-label">ЗАКРЫТЫЙ КАНАЛ СВЯЗИ</span>
+                <h1>Сообщения</h1>
+                <p>Внутренние уведомления и сообщения организации.</p>
+            </div>
+
+            <div class="message-card unread">
+                <span class="message-tag">НОВОЕ СООБЩЕНИЕ</span>
+                <h3>От: Руководитель отдела</h3>
+                <p>Агент 1047, вам назначено новое задание. Ознакомьтесь с делом № 001.</p>
+                <small>Сегодня, 09:42</small>
+            </div>
+
+            <div class="message-card unread">
+                <span class="message-tag">СИСТЕМНОЕ УВЕДОМЛЕНИЕ</span>
+                <h3>Обновление доступа</h3>
+                <p>Ваш уровень доступа подтверждён. Добро пожаловать в систему.</p>
+                <small>Сегодня, 08:02</small>
+            </div>
+
+        </section>
+
+        <!-- СТРАНИЦА: ПОМОЩЬ -->
+        <section class="page" id="page-help">
+
+            <div class="page-intro">
+                <span class="small-label">ЦЕНТР ПОДДЕРЖКИ</span>
+                <h1>Как пользоваться системой?</h1>
+                <p>Краткая инструкция для новых сотрудников.</p>
+            </div>
+
+            <div class="help-card">
+                <h3>01. Главная</h3>
+                <p>Здесь находятся новости, статистика и важные предупреждения.</p>
+            </div>
+
+            <div class="help-card">
+                <h3>02. Архив дел</h3>
+                <p>Нажми «Изучить дело», чтобы открыть материалы расследования.</p>
+            </div>
+
+            <div class="help-card">
+                <h3>03. Операции</h3>
+                <p>Здесь находятся задания, которые можно изучить и выполнять в рамках сюжета.</p>
+            </div>
+
+            <div class="help-card">
+                <h3>04. Сообщения</h3>
+                <p>Проверяй новые уведомления и сообщения от руководства.</p>
+            </div>
+
+            <div class="help-card">
+                <h3>05. Выход</h3>
+                <p>Кнопка «Выйти» возвращает на экран авторизации.</p>
+            </div>
+
+        </section>
+
+        <footer class="site-footer">
+            PROJECT: ECLIPSE © 2026
+            <span>ВСЕ МАТЕРИАЛЫ ВЫМЫШЛЕНЫ</span>
+        </footer>
+
+    </main>
+</div>
+
+<!-- ВСПЛЫВАЮЩЕЕ ОКНО -->
+<div id="modal" class="modal hidden">
+    <div class="modal-window">
+        <button id="close-modal" class="modal-close">×</button>
+        <span class="small-label">СЕКРЕТНЫЙ ДОКУМЕНТ</span>
+        <h2 id="modal-title">Дело № 001</h2>
+        <div id="modal-content">
+            <p>Информация загружается...</p>
+        </div>
+        <button id="modal-confirm" class="primary-button">
+            ПОНЯТНО
+        </button>
+    </div>
+</div>
+
+<!-- ПОДСКАЗКА ВНИЗУ -->
+<div id="toast" class="toast hidden">
+    <span>◈</span>
+    <p id="toast-message">Система готова.</p>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
